@@ -1,7 +1,9 @@
-import puppeteer from 'puppeteer-core'
-import edgeChromium from 'chrome-aws-lambda'
+import puppeteer from "puppeteer";
+// import puppeteer from 'puppeteer-core'
+import edgeChromium from "chrome-aws-lambda";
 // const puppeteer = require("puppeteer-core");
 const regex = /(\d+\.\d+)/;
+const token = process.env.token;
 const locations = [
   "ACEH",
   "BALI",
@@ -63,20 +65,18 @@ const locations = [
 
 export default async function handler(req, res) {
   try {
-    const executablePath = await edgeChromium.executablePath
-    const browser = await puppeteer.launch({
-        executablePath,
-        args: edgeChromium.args,
-        headless: false,
-      })
-    // const browser = await puppeteer.connect({
-    //   browserWSEndpoint: "wss://chrome.browserless.io?token=",
-    // });
+    // const executablePath = await edgeChromium.executablePath
+    // const browser = await puppeteer.launch()
+    const browser = await puppeteer.connect({
+      browserWSEndpoint: `wss://chrome.browserless.io?token=${token}`,
+    });
     const page = await browser.newPage();
     await page.goto("https://kawalpemilu.org");
     await page.waitForSelector("app-root");
-    await page.waitForSelector('tbody.data[_ngcontent-ng-c736795454=""]');
-    const tableSelector = 'tbody.data[_ngcontent-ng-c736795454=""]';
+    await page.waitForSelector("tbody");
+    const tableSelector = "tbody";
+    // await page.waitForSelector('tbody.data[_ngcontent-ng-c829747414=""]');
+    // const tableSelector = 'tbody.data[_ngcontent-ng-c736795454=""]';
     const trValues = await page.evaluate((selector) => {
       const rows = Array.from(document.querySelectorAll(selector + " tr"));
       const rowData = rows.map((row) => {
