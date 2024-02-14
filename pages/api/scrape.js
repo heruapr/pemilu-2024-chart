@@ -63,6 +63,7 @@ const locations = [
 
 export default async function handler(req, res) {
   try {
+    const executablePath = await edgeChromium.executablePath
     const browser = await puppeteer.launch({
         executablePath,
         args: edgeChromium.args,
