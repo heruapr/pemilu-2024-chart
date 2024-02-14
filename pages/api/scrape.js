@@ -1,5 +1,6 @@
-const puppeteer = require("puppeteer");
-import chromium from 'chrome-aws-lambda';
+import puppeteer from 'puppeteer-core'
+import edgeChromium from 'chrome-aws-lambda'
+// const puppeteer = require("puppeteer-core");
 const regex = /(\d+\.\d+)/;
 const locations = [
   "ACEH",
@@ -62,13 +63,14 @@ const locations = [
 
 export default async function handler(req, res) {
   try {
-    const browser = await chromium.puppeteer.launch({
-      args: [...chromium.args, "--hide-scrollbars", "--disable-web-security"],
-      defaultViewport: chromium.defaultViewport,
-      executablePath: await chromium.executablePath,
-      headless: true,
-      ignoreHTTPSErrors: true,
-    });
+    const browser = await puppeteer.launch({
+        executablePath,
+        args: edgeChromium.args,
+        headless: false,
+      })
+    // const browser = await puppeteer.connect({
+    //   browserWSEndpoint: "wss://chrome.browserless.io?token=",
+    // });
     const page = await browser.newPage();
     await page.goto("https://kawalpemilu.org");
     await page.waitForSelector("app-root");
