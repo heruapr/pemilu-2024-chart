@@ -115,9 +115,9 @@ export default function Home() {
   return (
     <div>
       <h1>Election Pie Chart: The data is retrieved by web scraping from www.kawalpemilu.org.</h1>
-      <h2>Please note that this data is not final; refer to <a href="www.kawalpemilu.org">www.kawalpemilu.org</a> for detailed information. </h2>
-      <h3>Maintained by heruapr</h3>
-      <h3>Contact heruapr.dev@gmail.com if you need the web API for this web-scraped data.</h3>
+      <h2>Please note that this data is not final; refer to <a href="https://kawalpemilu.org">www.kawalpemilu.org</a> for detailed information. </h2>
+      <h4>maintained by heruapr</h4>
+      {/* <h3>Contact heruapr.dev@gmail.com if you need the web API for this web-scraped data.</h3> */}
       {scrapedData ? (
         scrapedData.map((_, index) => (
           <div key={index}>
